@@ -1,0 +1,94 @@
+﻿<Page
+    x:Class="ASM_APP.Views.PivoDemoWithListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ASM_APP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:entity="using:ASM_APP.Entity"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Pivot>
+            <Pivot.Title>
+                <TextBlock Text="Music" Style="{ThemeResource SubheaderTextBlockStyle}"/>
+            </Pivot.Title>
+            <Pivot.RightHeader>
+                <CommandBar Background="Transparent" OverflowButtonVisibility="Collapsed" >
+                    <AppBarButton>
+                        <SymbolIcon Symbol="Audio"/>
+                    </AppBarButton>
+                    <AppBarSeparator/>
+                    <AppBarButton>
+                        <SymbolIcon Symbol="AddFriend"/>
+                    </AppBarButton>
+                    <AppBarSeparator/>
+                    <AppBarButton>
+                        <SymbolIcon Symbol="Add"/>
+                    </AppBarButton>
+                </CommandBar>
+            </Pivot.RightHeader>
+            <PivotItem Header="List Song" Style="{ThemeResource PivotTitleContentControlStyle}">
+                <Grid>
+                    <ListView ItemsSource="{x:Bind ListSong}" x:Name="MyListSong">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="entity:Song">
+                                <StackPanel Margin="0, 10, 0, 10" Orientation="Horizontal" Tapped="Choosed_Song" Tag="{Binding}">
+                                    <Ellipse Width="77" Height="77">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="{x:Bind thumbnail}"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <StackPanel Margin="10, 10, 0, 0">
+                                        <TextBlock Text="{x:Bind name}" Style="{ThemeResource BaseTextBlockStyle}"/>
+                                        <TextBlock Text="{x:Bind signer}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="Create Song">
+                <StackPanel>
+                    <TextBox x:Name="SongName" PlaceholderText="Song Name" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5"/>
+                    <TextBox x:Name="SongThumbnail" PlaceholderText="Song Thumbnail" BorderBrush="MediumSeaGreen" BorderThickness="0,0,0,1.5" Margin="0,0,0,10"/>
+                    <Button Content="Submit" Click="Button_Click"/>
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
+        <StackPanel VerticalAlignment="Bottom">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="#FFDEDEDE" Height="25" >
+                <TextBlock x:Name="Player_Status" Text="Now Playing: "/>
+                <TextBlock x:Name="Song_Name"/>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="#FFDEDEDE">
+                <TextBlock x:Name="time" Text="2" Margin="10"/>
+                <Slider Width="200"/>
+                <TextBlock Text="5" Margin="10"/>
+                <CommandBar OverflowButtonVisibility="Collapsed" Background="#FFDEDEDE">
+                    <AppBarSeparator/>
+                    <AppBarButton Click="Do_Previous">
+                        <SymbolIcon Symbol="Previous"/>
+                    </AppBarButton>
+                    <AppBarButton Click="Click_Play">
+                        <SymbolIcon Symbol="Play" x:Name="Play_Button"/>
+                    </AppBarButton>
+                    <AppBarButton Click="Do_Next">
+                        <SymbolIcon Symbol="Next"/>
+                    </AppBarButton>
+                    <AppBarSeparator/>
+                </CommandBar>
+                <CommandBar OverflowButtonVisibility="Collapsed" Background="#FFDEDEDE">
+                    <AppBarButton>
+                        <SymbolIcon Symbol="Volume"/>
+                    </AppBarButton>
+                </CommandBar>
+                <Slider Width="120"/>
+                <TextBlock x:Name="volume" Text="100%" Margin="10"/>
+            </StackPanel>
+        </StackPanel>
+        <MediaElement x:Name="MyPlayer"/>
+    </Grid>
+</Page>
